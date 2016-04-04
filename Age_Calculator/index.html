@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Age Calculator</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Age Calculator">
+  <meta name="author" content="Khairul Ashraf bin Basul Hak">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Age Calculator</h1>
+    <h2>Shiny App For Age Calculation and Zodiac Reference</h2>
+    <p>Khairul Ashraf bin Basul Hak<br/>Coursera Data Science Student</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This application is done using R Studio with Shiny Library. This application is hosted at Shinyapps.io and can be accessed from this link: <a href="https://khairulhak.shinyapps.io/Age_Calculator/">https://khairulhak.shinyapps.io/Age_Calculator/</a></p>
+
+<p>This application is intended to calculate age for any given birthdate. A date input box is used so that user should not be bothered to key in the date manually. Instead, user only need to click on the date input box and a small calendar will shows up. User can choose any data by clicking on the calendar.</p>
+
+<p>Other than that, there are two(2) other options that need user&#39;s input. The options are checkboxes to show the calculated age and to show zodiac sign for the birth date entered.</p>
+
+<p>If there are no input given, this application will display a suitable message.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>User Interface (ui.R)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>For user interface, there are side panel and main panel. Three 2 types of input method is used namely dateInput and checkboxGroupInput.</p>
+
+<p>These are the codes for ui.R:</p>
+
+<pre><code>library(shiny)
+shinyUI(pageWithSidebar(
+  headerPanel(&quot;Age Calculator&quot;),
+  sidebarPanel(
+    p(&quot;This is an age calculator application. This application allows user to pick any date of birth for the calenar and calculate the age for the given birtdate.&quot;),
+    dateInput(&quot;birthday&quot;, &quot;Birthdate:&quot;),
+    em(&quot;Click on the textbox to display calendar and choose any of the options below:&quot;),
+    p(),
+    checkboxGroupInput(&quot;display&quot;, &quot;Result options:&quot;,
+                       c(&quot;Calculate age&quot; = &quot;1&quot;,
+                         &quot;Display zodiac&quot; = &quot;2&quot;))
+  ),
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>User Interface (ui.R)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Continue from previos slide:</p>
+
+<pre><code>  mainPanel(
+    h1(&quot;Results&quot;),
+    img(src=&quot;zodiac.png&quot;, height = 400, width = 400),
+    p(),
+    strong(&quot;Below are the results for the given birthdate with the chosen options:&quot;),
+    p(&#39;The given birth day and date:&#39;),
+    verbatimTextOutput(&quot;age&quot;),
+    verbatimTextOutput(&quot;zod&quot;)
+
+  )
+))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Processing (server.R)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>For processing part, I used two (2) functions to check the input from the users and display the result. These are part of my codes:</p>
+
+<pre><code>library(shiny)
+shinyServer(
+function(input, output) {
+
+  output$age &lt;- renderPrint({format(input$birthday,&quot;%A %d %B %Y&quot;)})
+  output$zod &lt;- renderPrint(ProcessOptions({input$display}))
+  ...
+
+</code></pre>
+
+<p>It will be too lengthy to put the codes of my server.R in this slide but the codes are available in my github. </p>
+
+<p><a href="https://github.com/Khairulhak/Coursera-ShinyApp-Age-Calculator">https://github.com/Khairulhak/Coursera-ShinyApp-Age-Calculator</a></p>
+
+<p>Thank you.</p>
+
+<pre><code>
+
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='User Interface (ui.R)'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='User Interface (ui.R)'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Processing (server.R)'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
